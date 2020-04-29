@@ -35,14 +35,13 @@ router.post("/", MiddleWares.adminAuthRequired, (req, res)=>{
 });
 
 router.get("/", MiddleWares.adminAuthRequired, (req, res)=>{
-    let whereClause = req.body;
-    if (!whereClause) whereClause = {};
-    Flight.findAll({ where: whereClause }).then((flights) => {
+    Flight.findAll({ where: { } }).then((flights) => {
         res.status(200).json({status: 'success', result: { data: flights}});
     }).catch((err)=>{
         res.status(500).json({status: 'failed', result: {message: 'unable to get flights', error: err}});
     });
 });
+
 
 router.delete("/", MiddleWares.adminAuthRequired, (req, res)=>{
     let whereClause = req.body;
@@ -89,5 +88,21 @@ router.put("/:id", MiddleWares.adminAuthRequired, (req, res)=>{
         res.status(500).json({status: 'failed', result: {message: 'unable to update flight', error: err}});
     });
 });
+
+
+router.post("/query", MiddleWares.adminAuthRequired, (req, res)=>{
+	console.log("queryOptions: ", req.body);
+	let options = req.body
+	if (!options.hasOwnProperty('where')) options.where = { }; 
+	if (!options.hasOwnProperty('limit')) options.limit = 20; 
+	if (!options.hasOwnProperty('order')) options.order = [['departureDate', 'DESC']];
+	
+    Flight.findAll(options).then((flights) => {
+        res.status(200).json({status: 'success', result: { data: flights}});
+    }).catch((err)=>{
+        res.status(500).json({status: 'failed', result: {message: 'unable to get flights', error: err}});
+    });
+});
+
 
 module.exports = router;

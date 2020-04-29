@@ -6,12 +6,10 @@ let _           = require('../utils/scripts/underscore.js');
 
 const Admin = db.define('admin', {
     firstname: {
-      type: Sequelize.STRING,
-      allowNull: false
+        type: Sequelize.STRING,
     },
     lastname: {
-      type: Sequelize.STRING,
-      allowNull: false
+        type: Sequelize.STRING,
     },
     othername:  {
         type: Sequelize.STRING,
@@ -23,6 +21,7 @@ const Admin = db.define('admin', {
     }, 
     password:  {
         type: Sequelize.STRING,
+        allowNull: false,
         validate: {
           min: 8
         }

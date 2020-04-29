@@ -1,6 +1,6 @@
 module.exports = {
-     PORT: 3000,
-     ADMIN_AUTH_PIN: 2345,
+     PORT: 5000,
+     ADMIN_REG_PASSWORD: 'boss@flight.booky',
      USER_SECRET_KEY: "Gladys@FLIGHT_BOOKY@$%^#%%^#*200.ADMIN",
      ADMIN_SECRET_KEY: "Gladys@FLIGHT_BOOKY@$%^#%%^#*250.USER",
      DB_PATH: __dirname+'/data/app-database.sqlite',

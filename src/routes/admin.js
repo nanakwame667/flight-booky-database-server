@@ -8,7 +8,7 @@ const MiddleWares   = require('../config/middlewares');
 const router        = express.Router();
 
 const SECRET_KEY    = require('../utils/constants').ADMIN_SECRET_KEY;
-const ADMIN_AUTH_PIN    = require('../utils/constants').ADMIN_AUTH_PIN;
+const ADMIN_REG_PASSWORD    = require('../utils/constants').ADMIN_REG_PASSWORD;
 
 
 router.post("/auth", (req, res) => {
@@ -50,13 +50,13 @@ router.post("/", (req, res)=>{
 
   let data = req.body;
 
-  if (Functions.hasOwnProperties(data, ['firstname', 'lastname', 'username','password', 'auth_pin'])){
-      if (data.auth_pin == ADMIN_AUTH_PIN){
+  if (Functions.hasOwnProperties(data, ['firstname', 'lastname', 'username','password', 'reg_pass'])){
+      if (data.reg_pass == ADMIN_REG_PASSWORD){
         bcrypt.genSalt(10, (err, salt)=>{
             bcrypt.hash(data.password, salt, (err, hash)=>{
                 Admin.create({
                     firstname: data.firstname.trim(),
-                    lastname: data.lastname.trim(),
+                    lastname: data.lastname,
                     othername: data.othername,
                     username: data.username.trim(),
                     password: hash,
@@ -71,7 +71,7 @@ router.post("/", (req, res)=>{
         });
     }
     else{
-      res.status(500).json({status: 'failed', result: {message: "invalid auth_pin!."}});
+      res.status(500).json({status: 'failed', result: {message: "invalid registration password!."}});
     }
   }
   else{
